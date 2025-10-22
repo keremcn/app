@@ -210,32 +210,27 @@ const CorkBoard = () => {
         }}
       >
         {/* İçerik container - geniş alan */}
-        <div className="relative" style={{ minWidth: '3000px', minHeight: '3000px' }}>
-          {/* Notlar katmanı */}
-          <div className="relative" style={{ zIndex: 10 }}>
-            {notes.map(note => (
-              <StickyNote
-                key={note.id}
-                note={note}
-                onEdit={editNote}
-                onUpdatePosition={updateNotePosition}
-                onClickForConnection={handleNoteClickForConnection}
-                connectMode={connectMode}
-                isHighlighted={firstNoteForConnect === note.id}
-              />
-            ))}
-          </div>
-
-          {/* SVG katmanı - bağlantı çizgileri için (notların ÜZERİNDE) */}
+        <div className="relative" style={{ minWidth: '2500px', minHeight: '2500px' }}>
+          {/* SVG katmanı - ALTTA, bağlantı çizgileri için */}
           <svg 
             className="absolute top-0 left-0" 
-            width="3000"
-            height="3000"
+            width="2500"
+            height="2500"
             style={{ 
-              zIndex: 5,
-              pointerEvents: 'visiblePainted'
+              zIndex: 1,
+              pointerEvents: 'auto'
             }}
           >
+            <defs>
+              <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                <feOffset dx="2" dy="2" result="offsetblur"/>
+                <feMerge>
+                  <feMergeNode/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
             {connections.map(conn => {
               const from = getNoteCenter(conn.from);
               const to = getNoteCenter(conn.to);
@@ -251,6 +246,21 @@ const CorkBoard = () => {
               );
             })}
           </svg>
+
+          {/* Notlar katmanı - ÜSTTE */}
+          <div className="relative" style={{ zIndex: 10 }}>
+            {notes.map(note => (
+              <StickyNote
+                key={note.id}
+                note={note}
+                onEdit={editNote}
+                onUpdatePosition={updateNotePosition}
+                onClickForConnection={handleNoteClickForConnection}
+                connectMode={connectMode}
+                isHighlighted={firstNoteForConnect === note.id}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Boş durum mesajı */}
