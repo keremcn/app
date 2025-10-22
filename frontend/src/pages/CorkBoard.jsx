@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { ArrowLeft, Plus } from 'lucide-react';
 import StickyNote from '../components/StickyNote';
-import ConnectionLine from '../components/ConnectionLine';
+import ConnectionLineSimple from '../components/ConnectionLineSimple';
 import NoteEditor from '../components/NoteEditor';
 import { useToast } from '../hooks/use-toast';
 
