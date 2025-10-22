@@ -30,7 +30,7 @@ const ConnectionLine = ({ id, from, to, color, onDelete }) => {
       <path
         d={pathData}
         stroke="transparent"
-        strokeWidth={20}
+        strokeWidth={25}
         fill="none"
         strokeLinecap="round"
         style={{ pointerEvents: 'stroke' }}
@@ -39,26 +39,27 @@ const ConnectionLine = ({ id, from, to, color, onDelete }) => {
       {/* Gölge efekti */}
       <path
         d={pathData}
-        stroke="rgba(0,0,0,0.3)"
-        strokeWidth={isHovered ? 7 : 5}
+        stroke="rgba(0,0,0,0.4)"
+        strokeWidth={isHovered ? 10 : 8}
         fill="none"
         strokeLinecap="round"
-        transform="translate(2, 2)"
+        transform="translate(3, 3)"
         style={{ pointerEvents: 'none' }}
       />
       
-      {/* Ana çizgi - ip görünümü */}
+      {/* Ana çizgi - kalın ip görünümü */}
       <path
         d={pathData}
         stroke={color}
-        strokeWidth={isHovered ? 6 : 4}
+        strokeWidth={isHovered ? 9 : 7}
         fill="none"
         strokeLinecap="round"
-        strokeDasharray={isHovered ? '0' : '10,5'}
+        strokeDasharray={isHovered ? '0' : '12,6'}
         className="transition-all duration-200"
         style={{ 
           pointerEvents: 'none',
-          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+          filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.3))',
+          opacity: 0.9
         }}
       />
     </g>
