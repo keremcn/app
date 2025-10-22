@@ -24,7 +24,7 @@ const ConnectionLine = ({ id, from, to, color, onDelete }) => {
         }
       }}
       className="cursor-pointer"
-      style={{ pointerEvents: 'stroke' }}
+      style={{ pointerEvents: 'all' }}
     >
       {/* Geniş tıklanabilir alan (görünmez) */}
       <path
