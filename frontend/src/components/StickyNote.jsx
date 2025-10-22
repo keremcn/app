@@ -104,6 +104,7 @@ const StickyNote = ({
         transition: isDragging ? 'none' : 'box-shadow 0.2s ease'
       }}
       onMouseDown={handleMouseDown}
+      onClick={handleClick}
       onDoubleClick={() => !connectMode && onEdit(note)}
     >
       {/* Not içeriği */}
