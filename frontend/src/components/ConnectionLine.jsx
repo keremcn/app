@@ -24,39 +24,43 @@ const ConnectionLine = ({ id, from, to, color, onDelete }) => {
         }
       }}
       className="cursor-pointer"
-      style={{ pointerEvents: 'all' }}
+      style={{ pointerEvents: 'stroke' }}
     >
+      {/* Geniş tıklanabilir alan (görünmez) */}
+      <path
+        d={pathData}
+        stroke="transparent"
+        strokeWidth={20}
+        fill="none"
+        strokeLinecap="round"
+        style={{ pointerEvents: 'stroke' }}
+      />
+      
       {/* Gölge efekti */}
       <path
         d={pathData}
-        stroke="rgba(0,0,0,0.2)"
-        strokeWidth={isHovered ? 6 : 4}
+        stroke="rgba(0,0,0,0.3)"
+        strokeWidth={isHovered ? 7 : 5}
         fill="none"
         strokeLinecap="round"
         transform="translate(2, 2)"
+        style={{ pointerEvents: 'none' }}
       />
       
-      {/* Ana çizgi */}
+      {/* Ana çizgi - ip görünümü */}
       <path
         d={pathData}
         stroke={color}
-        strokeWidth={isHovered ? 5 : 3}
+        strokeWidth={isHovered ? 6 : 4}
         fill="none"
         strokeLinecap="round"
-        strokeDasharray={isHovered ? '0' : '8,4'}
+        strokeDasharray={isHovered ? '0' : '10,5'}
         className="transition-all duration-200"
+        style={{ 
+          pointerEvents: 'none',
+          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+        }}
       />
-      
-      {/* Hover durumunda tıklanabilir alan */}
-      {isHovered && (
-        <path
-          d={pathData}
-          stroke="transparent"
-          strokeWidth={20}
-          fill="none"
-          strokeLinecap="round"
-        />
-      )}
     </g>
   );
 };
