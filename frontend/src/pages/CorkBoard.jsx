@@ -211,8 +211,24 @@ const CorkBoard = () => {
       >
         {/* İçerik container - geniş alan */}
         <div className="relative" style={{ minWidth: '2500px', minHeight: '2500px' }}>
-          {/* Notlar katmanı - ALTTA */}
-          <div className="relative" style={{ zIndex: 1 }}>
+          {/* Bağlantı çizgileri - EN ALTTA */}
+          {connections.map(conn => {
+            const from = getNoteCenter(conn.from);
+            const to = getNoteCenter(conn.to);
+            return (
+              <ConnectionLineSimple
+                key={conn.id}
+                id={conn.id}
+                from={from}
+                to={to}
+                color={conn.color}
+                onDelete={deleteConnection}
+              />
+            );
+          })}
+
+          {/* Notlar katmanı - ÜSTTE */}
+          <div className="relative" style={{ zIndex: 10 }}>
             {notes.map(note => (
               <StickyNote
                 key={note.id}
@@ -225,32 +241,6 @@ const CorkBoard = () => {
               />
             ))}
           </div>
-
-          {/* SVG katmanı - ÜSTTE, bağlantı çizgileri için */}
-          <svg 
-            className="absolute top-0 left-0" 
-            width="2500"
-            height="2500"
-            style={{ 
-              zIndex: 100,
-              pointerEvents: 'none'
-            }}
-          >
-            {connections.map(conn => {
-              const from = getNoteCenter(conn.from);
-              const to = getNoteCenter(conn.to);
-              return (
-                <ConnectionLine
-                  key={conn.id}
-                  id={conn.id}
-                  from={from}
-                  to={to}
-                  color={conn.color}
-                  onDelete={deleteConnection}
-                />
-              );
-            })}
-          </svg>
         </div>
 
         {/* Boş durum mesajı */}
