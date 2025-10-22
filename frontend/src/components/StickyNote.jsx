@@ -29,20 +29,33 @@ const StickyNote = ({
     });
   };
 
-  // Sürükleme sırasında
+  // Sürükleme sırasında - optimize edilmiş
   useEffect(() => {
+    let animationFrameId = null;
+    let currentX = note.x;
+    let currentY = note.y;
+
     const handleMouseMove = (e) => {
       if (!isDragging) return;
 
-      const boardRect = noteRef.current.parentElement.getBoundingClientRect();
-      const newX = e.clientX - boardRect.left - dragOffset.x;
-      const newY = e.clientY - boardRect.top - dragOffset.y;
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
 
-      onUpdatePosition(note.id, Math.max(0, newX), Math.max(0, newY));
+      animationFrameId = requestAnimationFrame(() => {
+        const boardRect = noteRef.current.parentElement.parentElement.getBoundingClientRect();
+        currentX = e.clientX - boardRect.left - dragOffset.x;
+        currentY = e.clientY - boardRect.top - dragOffset.y;
+
+        onUpdatePosition(note.id, Math.max(0, currentX), Math.max(0, currentY));
+      });
     };
 
     const handleMouseUp = () => {
       setIsDragging(false);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
 
     if (isDragging) {
@@ -53,8 +66,11 @@ const StickyNote = ({
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
-  }, [isDragging, dragOffset, note.id, onUpdatePosition]);
+  }, [isDragging, dragOffset, note.id, note.x, note.y, onUpdatePosition]);
 
   return (
     <div
@@ -72,7 +88,9 @@ const StickyNote = ({
           ? '0 20px 30px rgba(0,0,0,0.3)' 
           : '0 8px 16px rgba(0,0,0,0.2)',
         transform: isDragging ? 'rotate(2deg)' : 'rotate(-1deg)',
-        zIndex: isDragging ? 1000 : 10
+        zIndex: isDragging ? 1000 : 10,
+        willChange: isDragging ? 'transform, left, top' : 'auto',
+        transition: isDragging ? 'none' : 'box-shadow 0.2s ease'
       }}
       onMouseDown={handleMouseDown}
       onDoubleClick={() => !connectMode && onEdit(note)}
