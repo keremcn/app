@@ -17,6 +17,8 @@ const StickyNote = ({
   // Sürükleme başlat
   const handleMouseDown = (e) => {
     if (connectMode) {
+      e.preventDefault();
+      e.stopPropagation();
       onClickForConnection(note.id);
       return;
     }
@@ -27,6 +29,15 @@ const StickyNote = ({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     });
+  };
+
+  // Bağlantı modu için tıklama
+  const handleClick = (e) => {
+    if (connectMode) {
+      e.preventDefault();
+      e.stopPropagation();
+      onClickForConnection(note.id);
+    }
   };
 
   // Sürükleme sırasında - optimize edilmiş
