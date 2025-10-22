@@ -231,8 +231,6 @@ const CorkBoard = () => {
             className="absolute top-0 left-0" 
             width="2500"
             height="2500"
-            viewBox="0 0 2500 2500"
-            preserveAspectRatio="xMinYMin meet"
             style={{ 
               zIndex: 100,
               pointerEvents: 'none'
