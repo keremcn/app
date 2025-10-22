@@ -211,52 +211,8 @@ const CorkBoard = () => {
       >
         {/* İçerik container - geniş alan */}
         <div className="relative" style={{ minWidth: '2500px', minHeight: '2500px' }}>
-          {/* SVG katmanı - ALTTA, bağlantı çizgileri için */}
-          <svg 
-            className="absolute top-0 left-0" 
-            width="2500"
-            height="2500"
-            viewBox="0 0 2500 2500"
-            style={{ 
-              zIndex: 1,
-              pointerEvents: 'auto'
-            }}
-          >
-            <defs>
-              <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-                <feOffset dx="2" dy="2" result="offsetblur"/>
-                <feMerge>
-                  <feMergeNode/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            {/* Test çizgisi - her zaman görünür olmalı */}
-            <line x1="50" y1="50" x2="300" y2="300" stroke="#FF0000" strokeWidth="10" />
-            <circle cx="50" cy="50" r="15" fill="#00FF00" />
-            <circle cx="300" cy="300" r="15" fill="#0000FF" />
-            
-            {connections.length > 0 && console.log('Connections:', connections.length)}
-            {connections.map(conn => {
-              const from = getNoteCenter(conn.from);
-              const to = getNoteCenter(conn.to);
-              console.log(`Drawing connection from ${from.x},${from.y} to ${to.x},${to.y} color ${conn.color}`);
-              return (
-                <ConnectionLine
-                  key={conn.id}
-                  id={conn.id}
-                  from={from}
-                  to={to}
-                  color={conn.color}
-                  onDelete={deleteConnection}
-                />
-              );
-            })}
-          </svg>
-
-          {/* Notlar katmanı - ÜSTTE */}
-          <div className="relative" style={{ zIndex: 10 }}>
+          {/* Notlar katmanı - ALTTA */}
+          <div className="relative" style={{ zIndex: 1 }}>
             {notes.map(note => (
               <StickyNote
                 key={note.id}
@@ -269,6 +225,33 @@ const CorkBoard = () => {
               />
             ))}
           </div>
+
+          {/* SVG katmanı - ÜSTTE, bağlantı çizgileri için */}
+          <svg 
+            className="absolute top-0 left-0" 
+            width="2500"
+            height="2500"
+            viewBox="0 0 2500 2500"
+            style={{ 
+              zIndex: 5,
+              pointerEvents: 'auto'
+            }}
+          >
+            {connections.map(conn => {
+              const from = getNoteCenter(conn.from);
+              const to = getNoteCenter(conn.to);
+              return (
+                <ConnectionLine
+                  key={conn.id}
+                  id={conn.id}
+                  from={from}
+                  to={to}
+                  color={conn.color}
+                  onDelete={deleteConnection}
+                />
+              );
+            })}
+          </svg>
         </div>
 
         {/* Boş durum mesajı */}
