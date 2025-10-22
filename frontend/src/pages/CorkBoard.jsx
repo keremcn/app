@@ -232,9 +232,10 @@ const CorkBoard = () => {
             width="2500"
             height="2500"
             viewBox="0 0 2500 2500"
+            preserveAspectRatio="xMinYMin meet"
             style={{ 
-              zIndex: 5,
-              pointerEvents: 'auto'
+              zIndex: 100,
+              pointerEvents: 'none'
             }}
           >
             {connections.map(conn => {
