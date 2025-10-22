@@ -216,6 +216,7 @@ const CorkBoard = () => {
             className="absolute top-0 left-0" 
             width="2500"
             height="2500"
+            viewBox="0 0 2500 2500"
             style={{ 
               zIndex: 1,
               pointerEvents: 'auto'
@@ -231,9 +232,16 @@ const CorkBoard = () => {
                 </feMerge>
               </filter>
             </defs>
+            {/* Test çizgisi - her zaman görünür olmalı */}
+            <line x1="50" y1="50" x2="300" y2="300" stroke="#FF0000" strokeWidth="10" />
+            <circle cx="50" cy="50" r="15" fill="#00FF00" />
+            <circle cx="300" cy="300" r="15" fill="#0000FF" />
+            
+            {connections.length > 0 && console.log('Connections:', connections.length)}
             {connections.map(conn => {
               const from = getNoteCenter(conn.from);
               const to = getNoteCenter(conn.to);
+              console.log(`Drawing connection from ${from.x},${from.y} to ${to.x},${to.y} color ${conn.color}`);
               return (
                 <ConnectionLine
                   key={conn.id}
