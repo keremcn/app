@@ -206,17 +206,31 @@ const CorkBoard = () => {
           backgroundSize: '100% 100%, 100% 100%, 100% 100%'
         }}
       >
-        {/* İçerik container - minimum boyut */}
-        <div className="relative" style={{ minWidth: '2000px', minHeight: '2000px' }}>
-          {/* SVG katmanı - bağlantı çizgileri için */}
+        {/* İçerik container - geniş alan */}
+        <div className="relative" style={{ minWidth: '3000px', minHeight: '3000px' }}>
+          {/* Notlar katmanı */}
+          <div className="relative" style={{ zIndex: 10 }}>
+            {notes.map(note => (
+              <StickyNote
+                key={note.id}
+                note={note}
+                onEdit={editNote}
+                onUpdatePosition={updateNotePosition}
+                onClickForConnection={handleNoteClickForConnection}
+                connectMode={connectMode}
+                isHighlighted={firstNoteForConnect === note.id}
+              />
+            ))}
+          </div>
+
+          {/* SVG katmanı - bağlantı çizgileri için (notların ÜZERİNDE) */}
           <svg 
-            className="absolute top-0 left-0 pointer-events-auto" 
+            className="absolute top-0 left-0" 
+            width="3000"
+            height="3000"
             style={{ 
-              width: '100%', 
-              height: '100%',
-              minWidth: '2000px',
-              minHeight: '2000px',
-              zIndex: 5
+              zIndex: 5,
+              pointerEvents: 'visiblePainted'
             }}
           >
             {connections.map(conn => {
@@ -234,21 +248,6 @@ const CorkBoard = () => {
               );
             })}
           </svg>
-
-          {/* Notlar */}
-          <div className="relative" style={{ zIndex: 10 }}>
-            {notes.map(note => (
-              <StickyNote
-                key={note.id}
-                note={note}
-                onEdit={editNote}
-                onUpdatePosition={updateNotePosition}
-                onClickForConnection={handleNoteClickForConnection}
-                connectMode={connectMode}
-                isHighlighted={firstNoteForConnect === note.id}
-              />
-            ))}
-          </div>
         </div>
 
         {/* Boş durum mesajı */}
