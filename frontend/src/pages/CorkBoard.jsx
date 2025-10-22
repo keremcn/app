@@ -49,12 +49,15 @@ const CorkBoard = () => {
     localStorage.setItem(`connections_${caseId}`, JSON.stringify(updatedConnections));
   };
 
-  // Yeni not ekle
+  // Yeni not ekle - rastgele pozisyon
   const addNote = () => {
+    const randomX = 100 + Math.floor(Math.random() * 600);
+    const randomY = 100 + Math.floor(Math.random() * 400);
+    
     const newNote = {
       id: Date.now().toString(),
-      x: 100,
-      y: 100,
+      x: randomX,
+      y: randomY,
       text: '',
       imageUrl: '',
       fileUrl: '',
