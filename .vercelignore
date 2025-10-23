@@ -1,0 +1,7 @@
+backend/
+tests/
+test_result.md
+README.md
+node_modules/
+.git/
+.gitignore
